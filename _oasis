@@ -1,0 +1,28 @@
+OASISFormat:  0.4
+Name:         ppx_getenv
+Version:      1.0
+Synopsis:     A -ppx extension to replace [%getenv "<var>"] with compile-time value
+Authors:      Peter Zotov <whitequark@whitequark.org>
+License:      MIT
+Plugins:      META (0.4), DevFiles (0.4)
+BuildTools:   ocamlbuild
+OCamlVersion: >= 4.02
+
+Executable ppx_getenv
+  Path:           lib
+  BuildDepends:   compiler-libs.common
+  MainIs:         ppx_getenv.ml
+  CompiledObject: byte
+
+Executable test_ppx_getenv
+  Build$:         flag(tests)
+  Install:        false
+  Path:           lib_test
+  MainIs:         test_ppx_getenv.ml
+  BuildTools:     ppx_getenv
+  BuildDepends:   oUnit (>= 2)
+  CompiledObject: byte
+  ByteOpt:       -ppx lib/ppx_getenv.byte
+
+Test test_ppx_getenv
+  Command:        $test_ppx_getenv
