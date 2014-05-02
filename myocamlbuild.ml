@@ -3,7 +3,7 @@ let _ =
   Unix.putenv "PPX_GETENV_CHECK" "42"
 
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 1d11e1dd39856bf0b116b19d3d6f4010) *)
+(* DO NOT EDIT (digest: 0e9099c0eceec1f8517f25380cfc326a) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -598,34 +598,11 @@ end
 # 594 "myocamlbuild.ml"
 open Ocamlbuild_plugin;;
 let package_default =
-  {
-     MyOCamlbuildBase.lib_ocaml = [];
-     lib_c = [];
-     flags =
-       [
-          (["oasis_executable_test_ppx_getenv_byte"; "ocaml"; "link"; "byte"],
-            [(OASISExpr.EBool true, S [A "-ppx"; A "lib/ppx_getenv.byte"])]);
-          ([
-              "oasis_executable_test_ppx_getenv_byte";
-              "ocaml";
-              "ocamldep";
-              "byte"
-           ],
-            [(OASISExpr.EBool true, S [A "-ppx"; A "lib/ppx_getenv.byte"])]);
-          ([
-              "oasis_executable_test_ppx_getenv_byte";
-              "ocaml";
-              "compile";
-              "byte"
-           ],
-            [(OASISExpr.EBool true, S [A "-ppx"; A "lib/ppx_getenv.byte"])])
-       ];
-     includes = []
-  }
+  {MyOCamlbuildBase.lib_ocaml = []; lib_c = []; flags = []; includes = []}
   ;;
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default package_default;;
 
-# 626 "myocamlbuild.ml"
+# 603 "myocamlbuild.ml"
 (* OASIS_STOP *)
 Ocamlbuild_plugin.dispatch dispatch_default;;
