@@ -8,14 +8,18 @@ Plugins:      META (0.4), DevFiles (0.4)
 BuildTools:   ocamlbuild
 OCamlVersion: >= 4.02
 
+Library ppx_getenv
+  Path:             lib
+  XMETAExtraLines:  ppx = "ppx_getenv"
+
 Executable ppx_getenv
-  Path:           lib
-  BuildDepends:   compiler-libs.common
-  MainIs:         ppx_getenv.ml
-  CompiledObject: best
+  Path:             lib
+  BuildDepends:     compiler-libs.common, ppx_tools
+  MainIs:           ppx_getenv.ml
+  CompiledObject:   best
 
 Test test_ppx_protobuf
-  Command:        ocamlbuild -I lib -package oUnit  \
-                             -cflags '-ppx $ppx_getenv' \
-                             lib_test/test_ppx_getenv.byte --
-  TestTools:      ppx_getenv
+  Command:          ocamlbuild -I lib -package oUnit  \
+                               -cflags '-ppx $ppx_getenv' \
+                               lib_test/test_ppx_getenv.byte --
+  TestTools:        ppx_getenv
