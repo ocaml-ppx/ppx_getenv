@@ -7,15 +7,6 @@ open Location
 
 let getenv s = try Sys.getenv s with Not_found -> ""
 
-exception Error of Location.t
-
-let () =
-  Location.register_error_of_exn (fun exn ->
-    match exn with
-    | Error loc ->
-      Some (error ~loc "[%getenv] accepts a string, e.g. [%getenv \"USER\"]")
-    | _ -> None)
-
 let getenv_mapper argv =
   (* Our getenv_mapper only overrides the handling of expressions in the default mapper. *)
   { default_mapper with
@@ -29,11 +20,12 @@ let getenv_mapper argv =
         | (* Should have a single structure item, which is evaluation of a constant string. *)
           PStr [{ pstr_desc =
                   Pstr_eval ({ pexp_loc  = loc;
-                               pexp_desc =
-                               Pexp_constant (Const_string (sym, None))}, _)}] ->
+                               pexp_desc = Pexp_constant (Const_string (sym, None))}, _)}] ->
           (* Replace with a constant string with the value from the environment. *)
           Exp.constant ~loc (Const_string (getenv sym, None))
-        | _ -> raise (Error loc)
+        | _ ->
+          raise (Location.Error (
+                  Location.error ~loc "[%getenv] accepts a string, e.g. [%getenv \"USER\"]"))
         end
       (* Delegate to the default mapper. *)
       | x -> default_mapper.expr mapper x;
