@@ -3,7 +3,6 @@ open Ast_helper
 open Asttypes
 open Parsetree
 open Longident
-open Location
 
 let getenv s = try Sys.getenv s with Not_found -> ""
 
