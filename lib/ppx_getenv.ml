@@ -31,4 +31,4 @@ let getenv_mapper argv =
       | x -> default_mapper.expr mapper x;
   }
 
-let () = run_main getenv_mapper
+let () = register "getenv" getenv_mapper
