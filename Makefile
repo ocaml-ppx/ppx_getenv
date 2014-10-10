@@ -1,41 +1,24 @@
-# OASIS_START
-# DO NOT EDIT (digest: a3c674b4239234cbbe53afe090018954)
+build:
+	ocaml pkg/build.ml native=true native-dynlink=true
 
-SETUP = ocaml setup.ml
-
-build: setup.data
-	$(SETUP) -build $(BUILDFLAGS)
-
-doc: setup.data build
-	$(SETUP) -doc $(DOCFLAGS)
-
-test: setup.data build
-	$(SETUP) -test $(TESTFLAGS)
-
-all:
-	$(SETUP) -all $(ALLFLAGS)
-
-install: setup.data
-	$(SETUP) -install $(INSTALLFLAGS)
-
-uninstall: setup.data
-	$(SETUP) -uninstall $(UNINSTALLFLAGS)
-
-reinstall: setup.data
-	$(SETUP) -reinstall $(REINSTALLFLAGS)
+test: build
+	rm _build/src_test/ -rf
+	ocamlbuild -classic-display -use-ocamlfind src_test/test_ppx_getenv.byte --
 
 clean:
-	$(SETUP) -clean $(CLEANFLAGS)
+	ocamlbuild -clean
 
-distclean:
-	$(SETUP) -distclean $(DISTCLEANFLAGS)
+.PHONY: build test clean
 
-setup.data:
-	$(SETUP) -configure $(CONFIGUREFLAGS)
+release:
+	@if [ -z "$(VERSION)" ]; then echo "Usage: make release VERSION=1.0.0"; exit 1; fi
+	git checkout -B release
+	sed -i 's/%%VERSION%%/$(VERSION)/' pkg/META
+	git add .
+	git commit -m "Prepare for release."
+	git tag -a v$(VERSION) -m "Version $(VERSION)"
+	git checkout @{-1}
+	git branch -D release
+	git push origin v$(VERSION)
 
-configure:
-	$(SETUP) -configure $(CONFIGUREFLAGS)
-
-.PHONY: build doc test all install uninstall reinstall clean distclean configure
-
-# OASIS_STOP
+.PHONY: release

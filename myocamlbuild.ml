@@ -1,7 +1,14 @@
+open Ocamlbuild_plugin
+
 (* used in tests *)
 let _ =
   Unix.putenv "PPX_GETENV_CHECK" "42"
 
-(* OASIS_START *)
-(* OASIS_STOP *)
-Ocamlbuild_plugin.dispatch dispatch_default;;
+let () = dispatch (
+  function
+  | After_rules ->
+    flag ["ocaml"; "compile"; "ppx_byte"] &
+      S[A"-ppx"; A"src/ppx_getenv.byte"];
+    flag ["ocaml"; "compile"; "ppx_native"] &
+      S[A"-ppx"; A"src/ppx_getenv.native"]
+  | _ -> ())
