@@ -1,0 +1,3 @@
+version = "%{version}%"
+description = "A -ppx extension to replace [%getenv \"<var>\"] with compile-time value"
+ppx = "./ppx_getenv"

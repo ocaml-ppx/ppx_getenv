@@ -6,6 +6,7 @@ homepage: "https://github.com/whitequark/ppx_getenv"
 bug-reports: "https://github.com/whitequark/ppx_getenv/issues"
 dev-repo: "git://github.com/whitequark/ppx_getenv.git"
 tags: [ "syntax" ]
+substs: [ "pkg/META" ]
 build: [
   "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
                          "native-dynlink=%{ocaml-native-dynlink}%"

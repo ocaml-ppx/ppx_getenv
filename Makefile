@@ -1,4 +1,5 @@
 build:
+	cp pkg/META.in pkg/META
 	ocaml pkg/build.ml native=true native-dynlink=true
 
 test: build
@@ -7,6 +8,7 @@ test: build
 
 clean:
 	ocamlbuild -clean
+	rm pkg/META
 
 .PHONY: build test clean
 
