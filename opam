@@ -1,6 +1,6 @@
 opam-version: "1.2"
-maintainer: "Peter Zotov <whitequark@whitequark.org>"
-authors: [ "Peter Zotov <whitequark@whitequark.org>" ]
+maintainer: "whitequark <whitequark@whitequark.org>"
+authors: [ "whitequark <whitequark@whitequark.org>" ]
 license: "Public domain"
 homepage: "https://github.com/whitequark/ppx_getenv"
 bug-reports: "https://github.com/whitequark/ppx_getenv/issues"
