@@ -1,3 +1,7 @@
+#if OCAML_VERSION < (4, 03, 0)
+#define Pconst_string Const_string
+#endif
+
 open Ast_mapper
 open Ast_helper
 open Asttypes
@@ -19,9 +23,9 @@ let getenv_mapper argv =
         | (* Should have a single structure item, which is evaluation of a constant string. *)
           PStr [{ pstr_desc =
                   Pstr_eval ({ pexp_loc  = loc;
-                               pexp_desc = Pexp_constant (Const_string (sym, None))}, _)}] ->
+                               pexp_desc = Pexp_constant (Pconst_string (sym, None))}, _)}] ->
           (* Replace with a constant string with the value from the environment. *)
-          Exp.constant ~loc (Const_string (getenv sym, None))
+          Exp.constant ~loc (Pconst_string (getenv sym, None))
         | _ ->
           raise (Location.Error (
                   Location.error ~loc "[%getenv] accepts a string, e.g. [%getenv \"USER\"]"))

@@ -15,6 +15,7 @@ build-test: [
   "ocamlbuild" "-classic-display" "-use-ocamlfind" "src_test/test_ppx_getenv.byte" "--"
 ]
 depends: [
+  "cppo"         {build}
   "ppx_tools"    {>= "0.99.1"}
   "ounit"        {test}
 ]
