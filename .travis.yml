@@ -1,0 +1,15 @@
+language: c
+env:
+  - OCAML=4.02.3
+  - OCAML=4.03.0
+script:
+  - echo "yes" | sudo add-apt-repository ppa:avsm/ppa
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq opam
+  - export OPAMYES=1
+  - opam init
+  - opam switch $OCAML
+  - eval `opam config env`
+  - opam pin add -n -k path ppx_getenv .
+  - opam install --deps-only -d -t ppx_getenv
+  - opam install -d -t -v ppx_getenv
