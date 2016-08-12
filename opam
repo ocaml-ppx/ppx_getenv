@@ -1,3 +1,5 @@
+name: "ppx_deriving"
+version: "1.2"
 opam-version: "1.2"
 maintainer: "whitequark <whitequark@whitequark.org>"
 authors: [ "whitequark <whitequark@whitequark.org>" ]
