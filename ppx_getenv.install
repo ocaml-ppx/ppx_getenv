@@ -1,7 +1,0 @@
-bin: [
-  "_build/src/ppx_getenv.native" {"../lib/ppx_getenv/ppx_getenv"} ]
-doc: [
-  "_build/LICENSE.txt" {"LICENSE.txt"}
-  "_build/README.md" {"README.md"} ]
-lib: [
-  "_build/pkg/META" {"META"} ]
