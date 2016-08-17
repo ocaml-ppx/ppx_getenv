@@ -1,4 +1,4 @@
-name: "ppx_deriving"
+name: "ppx_getenv"
 version: "1.2"
 opam-version: "1.2"
 maintainer: "whitequark <whitequark@whitequark.org>"
