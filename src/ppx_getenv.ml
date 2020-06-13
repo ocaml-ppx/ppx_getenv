@@ -1,16 +1,14 @@
-#if OCAML_VERSION < (4, 03, 0)
-#define Pconst_string Const_string
-#endif
+open Migrate_parsetree.OCaml_411.Ast
+let ocaml_version = Migrate_parsetree.Versions.ocaml_411
 
 open Ast_mapper
 open Ast_helper
 open Asttypes
 open Parsetree
-open Longident
 
 let getenv s = try Sys.getenv s with Not_found -> ""
 
-let getenv_mapper argv =
+let getenv_mapper _config _cookies =
   (* Our getenv_mapper only overrides the handling of expressions in the default mapper. *)
   { default_mapper with
     expr = fun mapper expr ->
@@ -18,20 +16,14 @@ let getenv_mapper argv =
       (* Is this an extension node? *)
       | { pexp_desc =
           (* Should have name "getenv". *)
-          Pexp_extension ({ txt = "getenv"; loc }, pstr)} ->
+          Pexp_extension ({ txt = "getenv"; loc }, pstr); _ } ->
         begin match pstr with
         | (* Should have a single structure item, which is evaluation of a constant string. *)
           PStr [{ pstr_desc =
                   Pstr_eval ({ pexp_loc  = loc;
-#if OCAML_VERSION >= (4, 11, 0)
-                               pexp_desc = Pexp_constant (Pconst_string (sym, s_loc, None))}, _)}] ->
+                               pexp_desc = Pexp_constant (Pconst_string (sym, s_loc, None)); _ }, _); _ }] ->
           (* Replace with a constant string with the value from the environment. *)
           Exp.constant ~loc (Pconst_string (getenv sym, s_loc, None))
-#else
-                               pexp_desc = Pexp_constant (Pconst_string (sym, None))}, _)}] ->
-          (* Replace with a constant string with the value from the environment. *)
-          Exp.constant ~loc (Pconst_string (getenv sym, None))
-#endif
         | _ ->
           raise (Location.Error (
                   Location.error ~loc "[%getenv] accepts a string, e.g. [%getenv \"USER\"]"))
@@ -40,4 +32,4 @@ let getenv_mapper argv =
       | x -> default_mapper.expr mapper x;
   }
 
-let () = register "getenv" getenv_mapper
+let () = Migrate_parsetree.Driver.register ~name:"getenv" ocaml_version getenv_mapper
