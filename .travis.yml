@@ -1,15 +1,19 @@
 language: c
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+services:
+- docker
 env:
-  - OCAML=4.02.3
-  - OCAML=4.03.0
-script:
-  - echo "yes" | sudo add-apt-repository ppa:avsm/ppa
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq opam
-  - export OPAMYES=1
-  - opam init
-  - opam switch $OCAML
-  - eval `opam config env`
-  - opam pin add -n -k path ppx_getenv .
-  - opam install --deps-only -d -t ppx_getenv
-  - opam install -d -t -v ppx_getenv
+  global:
+  - PACKAGE="ppx_getenv"
+  matrix:
+  - DISTRO=debian-stable OCAML_VERSION=4.02
+  - DISTRO=debian-stable OCAML_VERSION=4.03
+  - DISTRO=debian-stable OCAML_VERSION=4.04
+  - DISTRO=debian-stable OCAML_VERSION=4.05
+  - DISTRO=debian-stable OCAML_VERSION=4.06
+  - DISTRO=debian-stable OCAML_VERSION=4.07
+  - DISTRO=debian-stable OCAML_VERSION=4.08
+  - DISTRO=debian-stable OCAML_VERSION=4.09
+  - DISTRO=debian-stable OCAML_VERSION=4.10
+  - DISTRO=debian-stable OCAML_VERSION=4.11.0+trunk OCAML_BETA=enable
