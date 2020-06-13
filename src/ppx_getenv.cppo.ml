@@ -23,9 +23,15 @@ let getenv_mapper argv =
         | (* Should have a single structure item, which is evaluation of a constant string. *)
           PStr [{ pstr_desc =
                   Pstr_eval ({ pexp_loc  = loc;
+#if OCAML_VERSION >= (4, 11, 0)
+                               pexp_desc = Pexp_constant (Pconst_string (sym, s_loc, None))}, _)}] ->
+          (* Replace with a constant string with the value from the environment. *)
+          Exp.constant ~loc (Pconst_string (getenv sym, s_loc, None))
+#else
                                pexp_desc = Pexp_constant (Pconst_string (sym, None))}, _)}] ->
           (* Replace with a constant string with the value from the environment. *)
           Exp.constant ~loc (Pconst_string (getenv sym, None))
+#endif
         | _ ->
           raise (Location.Error (
                   Location.error ~loc "[%getenv] accepts a string, e.g. [%getenv \"USER\"]"))
