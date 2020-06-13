@@ -9,8 +9,8 @@ dev-repo: "git://github.com/whitequark/ppx_getenv.git"
 tags: [ "syntax" ]
 substs: [ "pkg/META" ]
 build: [
-  "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
-                         "native-dynlink=%{ocaml-native-dynlink}%"
+  "ocaml" "pkg/build.ml" "native=%{ocaml:native}%"
+                         "native-dynlink=%{ocaml:native-dynlink}%"
 ]
 run-test: [
   "ocamlbuild" "-classic-display" "-use-ocamlfind" "src_test/test_ppx_getenv.byte" "--"
