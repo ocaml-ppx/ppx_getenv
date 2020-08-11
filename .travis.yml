@@ -7,8 +7,6 @@ env:
   global:
   - PACKAGE="ppx_getenv"
   matrix:
-  - DISTRO=debian-stable OCAML_VERSION=4.02
-  - DISTRO=debian-stable OCAML_VERSION=4.03
   - DISTRO=debian-stable OCAML_VERSION=4.04
   - DISTRO=debian-stable OCAML_VERSION=4.05
   - DISTRO=debian-stable OCAML_VERSION=4.06
