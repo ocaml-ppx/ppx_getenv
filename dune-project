@@ -14,7 +14,7 @@
   (synopsis "A sample syntax extension using OCaml's new extension points API")
   (tags ("syntax"))
   (depends
-    (ocaml (>= 4.02.0))
-    (ocaml-migrate-parsetree (>= 1.7.0))
+    (ocaml (>= 4.04.0))
+    (ppxlib (>= 0.9.0))
     (ounit2 :with-test)
     (odoc :with-doc)))
