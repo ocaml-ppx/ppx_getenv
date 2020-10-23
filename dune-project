@@ -1,7 +1,8 @@
 (lang dune 2.0)
 (name ppx_getenv)
-(version 2.0)
+(version 2.1)
 
+(formatting disabled)
 (generate_opam_files true)
 
 (maintainers "whitequark <whitequark@whitequark.org>")
