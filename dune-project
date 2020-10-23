@@ -15,6 +15,6 @@
   (tags ("syntax"))
   (depends
     (ocaml (>= 4.04.0))
-    (ppxlib (>= 0.9.0))
+    (ppxlib (>= 0.18.0))
     (ounit2 :with-test)
     (odoc :with-doc)))
